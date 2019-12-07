@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const report = express.Router();
-const Report = require('../database/models/report');
+const {Complaint, ComplaintLocation, IncidentZip, Respondent} = require('../database/models');
 
 report.use(bodyParser.json());
 
