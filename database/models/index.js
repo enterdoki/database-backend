@@ -22,5 +22,5 @@ module.exports = {
     Complaint,
     ComplaintLocation,
     IncidentZip,
-    Respondent,
+    Respondent
 };
