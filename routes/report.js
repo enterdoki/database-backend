@@ -7,8 +7,7 @@ report.use(bodyParser.json());
 
 report.get('/', async (req, res, next) => {
     try {
-        const data = await Report.findAll({
-        });
+        const data = await Report.findAll();
         if (data) {
             res.status(200).json(data);
         }

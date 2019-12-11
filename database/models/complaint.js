@@ -26,6 +26,14 @@ const Complaint = db.define('complaint', {
     },
     status: {
         type: Sequelize.STRING
+    },
+    latitude: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+    },
+    longitude: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
     }
 },{
     timestamps:false
