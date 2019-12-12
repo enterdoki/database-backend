@@ -6,14 +6,14 @@ const ComplaintLocation = require('./complaint_location');
 const IncidentZip = require('./incident_zip');
 const Respondent = require('./respondent');
 
-Complaint.belongsTo(Respondent, {foreignKey: 'respondent_id'});
-Respondent.hasMany(Complaint, {foreignKey: 'unique_id'});
+Complaint.belongsTo(Respondent);
+Respondent.hasMany(Complaint);
 
-Complaint.belongsTo(ComplaintLocation, {foreignKey: 'complaint_location_id'});
-ComplaintLocation.hasMany(Complaint, {foreignKey: 'unique_id'});
+Complaint.belongsTo(ComplaintLocation);
+ComplaintLocation.hasMany(Complaint);
 
-IncidentZip.hasMany(ComplaintLocation, {foreignKey: 'complaint_location_id'});
-ComplaintLocation.belongsTo(IncidentZip, {foreignKey: 'zip'});
+IncidentZip.hasMany(ComplaintLocation);
+ComplaintLocation.belongsTo(IncidentZip);
 
 module.exports = {
     Airbnb,

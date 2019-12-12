@@ -1,17 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const service = express.Router();
-const Services = require('../database/models/services');
-const db = require('../database/db');
+
+const db = require('../database');
 
 service.use(bodyParser.json());
 
 service.get('/', async (req, res, next) => {
     try {
-        const data = await Services.findAll({
-        });
+        const data = await db.query(`SELECT * from services`);
         if (data) {
-            res.status(200).json(data);
+            res.status(200).json(data[0]);
         }
     } catch (err) {
         res.status(400).send(err);
@@ -49,11 +48,9 @@ service.get('/count', async (req, res, next) => {
 })
 service.get('/:borough', async (req, res, next) => {
     try {
-        const data = await Services.findAll({
-            where: { borough: req.params.borough }
-        })
+        const data = await db.query(`SELECT * FROM services WHERE borough = "${req.params.borough}"`);
         if (data) {
-            res.status(200).json(data);
+            res.status(200).json(data[0]);
         }
     } catch (err) {
         res.status(400).send(err);

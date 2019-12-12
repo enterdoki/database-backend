@@ -14,26 +14,27 @@ const Complaint = db.define('complaint', {
     },
     closed_date: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     complaint_type: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     description: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
     },
     latitude: {
         type: Sequelize.FLOAT,
-        allowNull: false,
+        allowNull: true,
     },
     longitude: {
         type: Sequelize.FLOAT,
-        allowNull: false,
+        allowNull: true,
     }
 },{
     timestamps:false

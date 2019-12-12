@@ -1,16 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const borough = express.Router();
-const Airbnb = require('../database/models/airbnb');
+const db = require('../database');
 
 borough.use(bodyParser.json());
 
 borough.get('/', async (req, res, next) => {
     try {
-        const data = await Airbnb.findAll({
-        });
+        const data = await db.query(`SELECT * FROM airbnbs`);
         if (data) {
-            res.status(200).json(data);
+            res.status(200).json(data[0]);
         }
     } catch (err) {
         res.status(400).send(err);
@@ -19,13 +18,9 @@ borough.get('/', async (req, res, next) => {
 
 borough.get('/:borough', async (req, res, next) => {
     try {
-        const data = await Airbnb.findAll({
-            where: {
-                borough: req.params.borough
-            }
-        });
+        const data = await db.query(`SELECT * FROM airbnbs WHERE borough = "${req.params.borough}"`);
         if (data) {
-            res.status(200).json(data);
+            res.status(200).json(data[0]);
         }
     } catch (err) {
         res.status(400).send(err);

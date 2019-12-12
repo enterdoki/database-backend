@@ -22,6 +22,7 @@ const Report = db.define('report', {
     date: {
         type: Sequelize.DATE,
         allowNull: false,
+        defaultValue: new Date()
     }
 },{
     timestamps:false

@@ -1,15 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const report = express.Router();
-const {Complaint, ComplaintLocation, IncidentZip, Respondent} = require('../database/models');
+const db = require('../database');
 
 report.use(bodyParser.json());
 
 report.get('/', async (req, res, next) => {
     try {
-        const data = await Report.findAll();
+        const data = await db.query(`SELECT * FROM reports`);
         if (data) {
-            res.status(200).json(data);
+            res.status(200).json(data[0]);
         }
     } catch (err) {
         res.status(400).send(err);
@@ -18,24 +18,15 @@ report.get('/', async (req, res, next) => {
 
 report.post('/', async (req, res, next) => {
     try {
-        if(req.body.description) {
-            const data = await Report.create({
-                severity: req.body.severity,
-                description: req.body.description,
-                latitude: req.body.latitude,
-                longitude: req.body.longitude,
-                date: Date.now()
-            })
-            res.status(201).send({'The following user report has been added: ': data});
+        if (req.body.description) {
+            await db.query(`INSERT INTO reports VALUES (DEFAULT, "${req.body.severity}", "${req.body.description}", ${req.body.latitude}, ${req.body.longitude}, DEFAULT)`)
+
+            res.status(201).send('The following user report has been added.')
         } else {
-            const data = await Report.create({
-                severity: req.body.severity,
-                latitude: req.body.latitude,
-                longitude: req.body.longitude,
-                date: Date.now()
-            })
-            res.status(201).send({'The following user report has been added: ': data});
-        } 
+            await db.query(`INSERT INTO reports VALUES (DEFAULT, "${req.body.severity}", ${req.body.latitude}, ${req.body.longitude}, DEFAULT)`)
+
+            res.status(201).send('The following user report has been added.');
+        }
     } catch (err) {
         res.status(400).send(err);
     }
